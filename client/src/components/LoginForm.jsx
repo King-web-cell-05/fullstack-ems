@@ -67,7 +67,7 @@ const LoginForm = ({ role, title, subtitle }) => {
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
