@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LoginLeftSide from "./LoginLeftSide";
 import { Link } from "react-router-dom";
-import { ArrowLeftIcon, EyeIcon, EyeOffIcon } from "lucide-react";
+import { ArrowLeftIcon, EyeIcon, EyeOffIcon, LoaderIcon } from "lucide-react";
 
 const LoginForm = ({ role, title, subtitle }) => {
   const [email, setEmail] = useState("");
@@ -78,6 +78,14 @@ const LoginForm = ({ role, title, subtitle }) => {
                 </button>
               </div>
             </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 bg-linear-to-r from-indigo-600 to-indigo-500 text-white rounded-md text-sm font-semibold  hover:from-indigo-700 hover:to-indigo-600  disabled:opacity-50 transition-all duration-200 shadow-lg shadow-indigo-500/25 active:scale-[0.98] flex items-center justify-center "
+            >
+              {loading && <LoaderIcon className="animate-spin h-4 w-4 mr-2" />}
+              Sign in
+            </button>
           </form>
         </div>
       </div>
