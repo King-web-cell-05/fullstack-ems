@@ -15,20 +15,19 @@ const Sidebar = () => {
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
-  const sidebarContent = 
-  <>
-  {/* Brand header */}
-  <div>
-    
-  </div>
-  {/* User profile card */}
+  const sidebarContent = (
+    <>
+      {/* Brand header */}
+      <div></div>
+      {/* User profile card */}
 
-  {/* {Section label} */}
+      {/* {Section label} */}
 
-  {/* Navigation list */}
+      {/* Navigation list */}
 
-  {/* {Logout} */}
-  </>;
+      {/* {Logout} */}
+    </>
+  );
   return (
     <>
       {/* {Mobile hamburger button} */}
@@ -50,7 +49,11 @@ const Sidebar = () => {
         {sidebarContent}
       </aside>
       {/* {Sidebar - mobile} */}
-      <aside className={'lg:hidden fixed inset-y-0 left-0 w-72 bg-linear-to-b from-slate-900 via-slate-900 to-slate-950 text-white z-50 flex flex-col transform transition-transform duration-300 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}'}>
+      <aside
+        className={
+          'lg:hidden fixed inset-y-0 left-0 w-72 bg-linear-to-b from-slate-900 via-slate-900 to-slate-950 text-white z-50 flex flex-col transform transition-transform duration-300 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}'
+        }
+      >
         {sidebarContent}
       </aside>
     </>
