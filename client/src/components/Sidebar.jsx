@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { dummyProfileData } from "../assets/assets";
-import { MenuIcon } from "lucide-react";
+import { MenuIcon, User, UserIcon, XIcon } from "lucide-react";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -18,7 +18,28 @@ const Sidebar = () => {
   const sidebarContent = (
     <>
       {/* Brand header */}
-      <div></div>
+      <div className="px-5 pt-6 pb-5 border-b border-white/6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <UserIcon className="text-white-7" />
+            <div>
+              <p className="font-semibold text-[13px] text-white tracking-wide">
+                Employee MS
+              </p>
+              <p className="text-[11px] text-slate-500 font-medium">
+                Management System
+              </p>
+            </div>
+          </div>
+          {/* Close button on mobile */}
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="lg-hidden text-slate-400 hover:text-white p-1"
+          >
+            <XIcon size={20} />
+          </button>
+        </div>
+      </div>
       {/* User profile card */}
 
       {/* {Section label} */}
@@ -32,7 +53,7 @@ const Sidebar = () => {
     <>
       {/* {Mobile hamburger button} */}
       <button
-        classname="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg  shadow-lg border border-white/10"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg  shadow-lg border border-white/10"
         onClick={() => setMobileOpen(true)}
       >
         <MenuIcon size={20} />
