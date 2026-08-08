@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { dummyProfileData } from "../assets/assets";
-import { MenuIcon, UserIcon, XIcon } from "lucide-react";
+import {
+  MenuIcon,
+  UserIcon,
+  XIcon,
+  LayoutGridIcon,
+  CalendarIcon,
+  FileTextIcon,
+  DollarSignIcon,
+  SettingsIcon,
+  ChevronRightIcon,
+} from "lucide-react";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -11,12 +21,22 @@ const Sidebar = () => {
   useEffect(() => {
     setUserName(dummyProfileData.firstName + " " + dummyProfileData.lastName);
   }, []);
-  // close mobile sidebar on route change
+
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
   const role = "" || "EMPLOYEE";
+  const navItems = [
+    { name: "Dashboard", path: "/dashboard", icon: LayoutGridIcon },
+    role === "ADMIN"
+      ? { name: "Employees", path: "/employees", icon: UserIcon }
+      : { name: "Attendance", path: "/attendance", icon: CalendarIcon },
+    { name: "Leave", path: "/leave", icon: FileTextIcon },
+    { name: "Payslips", path: "/payslips", icon: DollarSignIcon },
+    { name: "Settings", path: "/settings", icon: SettingsIcon },
+  ];
+
   const sidebarContent = (
     <>
       {/* Brand header */}
@@ -64,12 +84,50 @@ const Sidebar = () => {
       )}
 
       {/* {Section label} */}
+      <div className="px-5 pt-5 pb-2">
+        <p className="text-[10px] font-semibold  uppercase tracking-wide [0.12em] text-slate-500">
+          Navigation
+        </p>
+      </div>
 
       {/* Navigation list */}
+      <div className="flex-1 px-3 space-y-0.5 overflow-y-auto">
+        {navItems.map((item) => {
+          const isActive = pathname.startsWith(item.path);
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={`group relative flex items-center gap-3 px-3 py-2 rounded-md text-sm hover:bg-white/5 ${
+                isActive
+                  ? "bg-indigo-500/12 text-indigo-300"
+                  : "text-slate-300 hover:text-white hover:bg-white/4"
+              }`}
+            >
+              {isActive && (
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-indigo-500" />
+              )}
+              <Icon
+                className={`w-[17px] h-[17px] shrink-0 ${
+                  isActive
+                    ? "text-indigo-300"
+                    : "text-slate-400 group-hover:text-slate-300"
+                }`}
+              />
+              <span className="flex-1">{item.name}</span>
+              {isActive && (
+                <ChevronRightIcon className="w-3.5 h-3.5 text-indigo-500/50" />
+              )}
+            </Link>
+          );
+        })}
+      </div>
 
       {/* {Logout} */}
     </>
   );
+
   return (
     <>
       {/* {Mobile hamburger button} */}
@@ -92,7 +150,9 @@ const Sidebar = () => {
       </aside>
       {/* {Sidebar - mobile} */}
       <aside
-        className={`lg:hidden fixed inset-y-0 left-0 w-72 bg-linear-to-b from-slate-900 via-slate-900 to-slate-950 text-white z-50 flex flex-col transform transition-transform duration-300 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`lg:hidden fixed inset-y-0 left-0 w-72 bg-linear-to-b from-slate-900 via-slate-900 to-slate-950 text-white z-50 flex flex-col transform transition-transform duration-300 ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         {sidebarContent}
       </aside>
