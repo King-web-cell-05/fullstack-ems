@@ -11,6 +11,7 @@ import {
   DollarSignIcon,
   SettingsIcon,
   ChevronRightIcon,
+  LogOutIcon,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -36,6 +37,10 @@ const Sidebar = () => {
     { name: "Payslips", path: "/payslips", icon: DollarSignIcon },
     { name: "Settings", path: "/settings", icon: SettingsIcon },
   ];
+   
+  const handleLogOut = ()=>{
+    window.location.href ="/login"
+  }
 
   const sidebarContent = (
     <>
@@ -125,6 +130,12 @@ const Sidebar = () => {
       </div>
 
       {/* {Logout} */}
+      <div className="p-3 border-t border-white/6">
+      <button onClick={handleLogOut} className="flex items-center gap-3 w-full px-3 w-full px-3 py-3 py-2.5 rounded-md text-[13px] font-medium text-slate-400 hover:bg-rose-500/8 transition-all duration-150">
+        <LogOutIcon className="w-[17px] h-[17px]"/>
+        <span>Log out </span>
+      </button>
+      </div>
     </>
   );
 
