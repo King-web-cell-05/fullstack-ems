@@ -48,7 +48,7 @@ const AdminDashboard = ({data}) => {
                 {s.value}
               </p>
             </div>
-            <card.icon className="size-10 p-2.5 rounded-lg bg-slate-100 text-slate-600 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors duration-200" />
+            <s.icon className="size-10 p-2.5 rounded-lg bg-slate-100 text-slate-600 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors duration-200" />
           </div>
         ))}
       </div>
