@@ -59,13 +59,13 @@ const EmployeeDashboard = ({ data }) => {
       </div>
       <div className="flex flex-col sm:flex-row gap-3">
         <Link
-          to="attendance"
+          to="/attendance"
           className="btn-primary text-center inline-flex items-center justify-center gap-2"
         >
           Mark Attendance <ArrowRight className="size-4" />
         </Link>
 
-        <Link to="leave" className="btn-secondary text-center ">
+        <Link to="/leave" className="btn-secondary text-center ">
           Apply for leave
         </Link>
       </div>
