@@ -10,11 +10,11 @@ const Employees = () => {
 
   const fetchEmployees = useCallback(() => {
     setLoading(true);
-    setEmployees(dummyEmployeeData);
+    setEmployees(dummyEmployeeData.filter((emp) => (selectedDept ? emp.department === selectedDept : emp)));
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  }, []);
+  }, [selectedDept]);
   useEffect(() => {
     fetchEmployees();
   }, [fetchEmployees]);
