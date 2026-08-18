@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { dummyEmployeeData, DEPARTMENTS } from "../assets/assets";
 import { Plus, Search } from "lucide-react";
+import EmployeeCard from "../components/EmployeeCard";
 
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [selectedDept, setSelectDept] = useState("");
+  const [editEmployee, setEditEmployee] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
 
   const fetchEmployees = useCallback(() => {
     setLoading(true);
@@ -77,7 +81,14 @@ const Employees = () => {
               No employees found
             </p>
           ) : (
-            filtered.map((emp) => <p key={emp.id}>{emp.firstName}</p>)
+            filtered.map((emp) => (
+              <EmployeeCard
+                key={emp.id}
+                employee={emp}
+                onDelete={fetchEmployees}
+                onEdit={(e) => setEditEmployee(e)}
+              />
+            ))
           )}
         </div>
       )}
