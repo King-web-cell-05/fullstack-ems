@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { dummyEmployeeData, DEPARTMENTS } from "../assets/assets";
 import { Plus, Search, X } from "lucide-react";
 import EmployeeCard from "../components/EmployeeCard";
+import EmployeeForm from "../components/EmployeeForm";
 
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
@@ -22,14 +23,17 @@ const Employees = () => {
       setLoading(false);
     }, 1000);
   }, [selectedDept]);
+
   useEffect(() => {
     fetchEmployees();
   }, [fetchEmployees]);
+
   const filtered = employees.filter((emp) =>
-    `${emp.firstName} ${emp.lastName}${emp.position}`
+    `${emp.firstName} ${emp.lastName} ${emp.position}`
       .toLowerCase()
       .includes(search.toLowerCase()),
   );
+
   return (
     <div className="animate-fade-in">
       {/* header */}
@@ -46,6 +50,7 @@ const Employees = () => {
           Add Employee
         </button>
       </div>
+
       {/* search bar */}
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <div className="relative flex-1">
@@ -94,6 +99,7 @@ const Employees = () => {
           )}
         </div>
       )}
+
       {/* Create Employee Modal */}
       {showCreateModal && (
         <div
@@ -122,7 +128,15 @@ const Employees = () => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="p-6">form</div>
+            <div className="p-6">
+              <EmployeeForm
+                onSuccess={() => {
+                  setShowCreateModal(null);
+                  fetchEmployees();
+                }}
+                onCancel={() => setShowCreateModal(false)}
+              />
+            </div>
           </div>
         </div>
       )}
@@ -130,7 +144,7 @@ const Employees = () => {
       {/* Edit Employee Modal */}
       {editEmployee && (
         <div
-          className="fixed inset-0 z-50 flex items-start justify-center p-4 oveflow-y-auto bg-black/40 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-start justify-center p-4 overflow-y-auto bg-black/40 backdrop-blur-sm"
           onClick={() => setEditEmployee(null)}
         >
           <div
@@ -138,7 +152,7 @@ const Employees = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-6 pb-0">
-                <div>
+              <div>
                 <h2 className="text-lg font-semibold text-slate-900">
                   Edit Employees
                 </h2>
@@ -152,10 +166,17 @@ const Employees = () => {
                 className="p-2 rounded-lg hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600"
               >
                 <X className="w-5 h-5" />
-                 </button>
+              </button>
             </div>
             <div className="p-6">
-              form  
+              <EmployeeForm
+                initialData={editEmployee}
+                onSuccess={() => {
+                  setEditEmployee(null);
+                  fetchEmployees();
+                }}
+                onCancel={() => setEditEmployee(null)}
+              />
             </div>
           </div>
         </div>
