@@ -22,6 +22,11 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
       basicSalary: parseFloat(formData.get("basicSalary")) || 0,
       allowances: parseFloat(formData.get("allowances")) || 0,
       deductions: parseFloat(formData.get("deductions")) || 0,
+      email: formData.get("email")?.toString().trim(),
+      role: formData.get("role")?.toString(),
+      ...(formData.get("password") && {
+        password: formData.get("password").toString(),
+      }),
       ...(isEditMode && {
         employmentStatus: formData.get("employmentStatus")?.toString(),
       }),
@@ -47,6 +52,8 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
       onSubmit={handleSubmit}
       className="space-y-6 max-w-3xl animate-fade-in"
     >
+      {/* Personal Information */}
+
       <div className="card p-5 sm:p-6">
         <h3 className="font-medium mb-6 pb-4 border-b border-slate-100">
           Personal Information
@@ -102,6 +109,7 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
           </div>
         </div>
       </div>
+      {/* Employment Details */}
 
       <div className="card p-5 sm:p-6">
         <h3 className="text-base font-medium text-slate-900 mb-6 pb-4 border-b border-slate-100">
@@ -110,7 +118,10 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-700">
           <div>
             <label className="block mb-2">Department</label>
-            <select name="department" defaultValue={initialData?.department || ""}>
+            <select
+              name="department"
+              defaultValue={initialData?.department || ""}
+            >
               <option value="">Select Department</option>
               {DEPARTMENTS.map((deptName) => (
                 <option key={deptName} value={deptName}>
@@ -122,7 +133,11 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
 
           <div>
             <label className="block mb-2">Position</label>
-            <input name="position" required defaultValue={initialData?.position} />
+            <input
+              name="position"
+              required
+              defaultValue={initialData?.position}
+            />
           </div>
 
           <div>
@@ -163,7 +178,10 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
           {isEditMode && (
             <div>
               <label className="block mb-2">Status</label>
-              <select name="employmentStatus" defaultValue={initialData?.employmentStatus}>
+              <select
+                name="employmentStatus"
+                defaultValue={initialData?.employmentStatus}
+              >
                 <option value="ACTIVE">Active</option>
                 <option value="INACTIVE">Inactive</option>
               </select>
@@ -172,7 +190,51 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
         </div>
       </div>
 
-   
+      {/* Account Setup */}
+      <div className="card p-5 sm:p-6">
+        <h3 className=" text-base font-medium text-slate-900 mb-6 pb-4 border-b border-slate-100">
+          Account Setup
+        </h3>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-700">
+          <div className="sm:col-span-2">
+            <label className="block mb-2">Work Email</label>
+            <input
+              type="email"
+              name="email"
+              required
+              defaultValue={initialData?.email}
+            />
+          </div>
+
+          {!isEditMode ? (
+            <div>
+              <label className="block mb-2">Temporary Password</label>
+              <input type="password" name="password" required />
+            </div>
+          ) : (
+            <div>
+              <label className="block mb-2">Change Password (Optional)</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Leave blank to keep current"
+              />
+            </div>
+          )}
+
+          <div>
+            <label className="block mb-2">System Role</label>
+            <select
+              name="role"
+              defaultValue={initialData?.user?.role || "EMPLOYEE"}
+            >
+              <option value="EMPLOYEE">Employee</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </form>
   );
 };
