@@ -17,6 +17,14 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
       phone: formData.get("phone")?.toString().trim(),
       joinDate: formData.get("joinDate")?.toString(),
       bio: formData.get("bio")?.toString().trim() || "",
+      department: formData.get("department")?.toString().trim(),
+      position: formData.get("position")?.toString().trim(),
+      basicSalary: parseFloat(formData.get("basicSalary")) || 0,
+      allowances: parseFloat(formData.get("allowances")) || 0,
+      deductions: parseFloat(formData.get("deductions")) || 0,
+      ...(isEditMode && {
+        employmentStatus: formData.get("employmentStatus")?.toString(),
+      }),
     };
 
     setLoading(true);
@@ -95,71 +103,76 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
         </div>
       </div>
 
-      <div className="flex justify-end gap-3">
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={onCancel || (() => navigate("/employees"))}
-        >
-          Cancel
-        </button>
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading
-            ? "Saving..."
-            : isEditMode
-              ? "Save Changes"
-              : "Create Employee"}
-        </button>
-      </div>
-      {/* Employment Details */}
       <div className="card p-5 sm:p-6">
-        <h3 className="text-base font-medium text-slate-900 mb-6 pb-4 border-b border-slate-100">Employment Details</h3>
+        <h3 className="text-base font-medium text-slate-900 mb-6 pb-4 border-b border-slate-100">
+          Employment Details
+        </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-700">
-            <div>
-                <label className="block mb-2">Department</label>
-                <select name="department" defaultValue={initialData?.department || ""}>
-                    <option value="">Select Department</option>
-                    {DEPARTMENTS.map((deptName)=> (
-                        <option key={deptName} value={deptName}>
-                            {deptName}
-                        </option>
-                    ))}
-                </select>
-            </div>
-             <div>
+          <div>
+            <label className="block mb-2">Department</label>
+            <select name="department" defaultValue={initialData?.department || ""}>
+              <option value="">Select Department</option>
+              {DEPARTMENTS.map((deptName) => (
+                <option key={deptName} value={deptName}>
+                  {deptName}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
             <label className="block mb-2">Position</label>
             <input name="position" required defaultValue={initialData?.position} />
           </div>
-           <div>
-            <label className="block mb-2">Basic Salary</label>
-            <input type="number" name="basicSalary" required min="0" defaultValue={initialData?.basicSalary || 0} />
 
+          <div>
+            <label className="block mb-2">Basic Salary</label>
+            <input
+              type="number"
+              name="basicSalary"
+              required
+              min="0"
+              defaultValue={initialData?.basicSalary || 0}
+            />
           </div>
-           <div>
+
+          <div>
             <label className="block mb-2">Allowances</label>
-            <input type="number" name="allowances" min="0" step="0"  required defaultValue={initialData?.allowances || 0} />
+            <input
+              type="number"
+              name="allowances"
+              min="0"
+              step="0"
+              required
+              defaultValue={initialData?.allowances || 0}
+            />
           </div>
-             <div>
+
+          <div>
             <label className="block mb-2">Deductions</label>
-            <input type="number" name="deductions" min="0" step="0"  required defaultValue={initialData?.deductions|| 0} />
+            <input
+              type="number"
+              name="deductions"
+              min="0"
+              step="0"
+              required
+              defaultValue={initialData?.deductions || 0}
+            />
           </div>
+
           {isEditMode && (
-               <div>
-            <label className="block mb-2">Status</label>
-            <select  name="employmentStatus" defaultValue={initialData?.employmentStatus} >
+            <div>
+              <label className="block mb-2">Status</label>
+              <select name="employmentStatus" defaultValue={initialData?.employmentStatus}>
                 <option value="ACTIVE">Active</option>
                 <option value="INACTIVE">Inactive</option>
-
-
-            </select>
-          </div>
+              </select>
+            </div>
           )}
         </div>
       </div>
 
-      {/* Account Setup */}
-
-      {/* buttons */}
+   
     </form>
   );
 };
