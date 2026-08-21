@@ -27,6 +27,7 @@ const Attendance = () => {
   const todayRecord = history.find(
     (r) => new Date(r.date).toDateString() === today.toDateString(),
   );
+  const isDeleted = false;
 
   return (
     <div className="animate fade-in">
@@ -36,6 +37,18 @@ const Attendance = () => {
           Track your work hours and daily check-ins
         </p>
       </div>
+      {isDeleted ? (
+        <div className="mb-8 p-6 bg-rose-50 border border-rose-200 rounded-2xl text-center">
+          <p className="text-rose-600">
+            You can no longer clock in or out because your employee record has
+            been marked as deleted.
+          </p>
+        </div>
+      ) : (
+        <div className="mb-8">
+         <CheckInButton todayRecord={todayRecord} onAction={fetchData}/>
+        </div>
+      )}
     </div>
   );
 };
