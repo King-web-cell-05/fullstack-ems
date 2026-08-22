@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { LogInIcon, LogOutIcon } from "lucide-react";
 import { dummyAttendanceData } from "../assets/assets";
+import AttendanceStats from "../components/attendance/AttendanceStats";
 
 const CheckInButton = ({ todayRecord, onAction }) => {
   const isCheckedIn = Boolean(todayRecord?.checkIn && !todayRecord?.checkOut);
@@ -89,6 +90,7 @@ const Attendance = () => {
       ) : (
         <CheckInButton todayRecord={todayRecord} onAction={fetchData} />
       )}
+      <AttendanceStats history={history} />
     </div>
   );
 };
