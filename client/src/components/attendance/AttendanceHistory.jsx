@@ -1,5 +1,6 @@
 import React from "react";
 import { getDayTypeDisplay } from "../../assets/assets";
+import { format } from "date-fns";
 
 const AttendanceHistory = ({ history }) => {
   return (
@@ -32,7 +33,7 @@ const AttendanceHistory = ({ history }) => {
                 return (
                   <tr key={record._id || record.id}>
                     <td className="px-6 py-4 font-medium text-slate-900">
-                      {record.date}
+                      {format(new Date(record.date), "MMM dd, yyyy")}
                     </td>
                   </tr>
                 );
