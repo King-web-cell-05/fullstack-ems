@@ -14,7 +14,7 @@ const AttendanceHistory = ({ history }) => {
               <th className="px-6 py-4">Date</th>
               <th className="px-6 py-4">Check In</th>
               <th className="px-6 py-4">Check Out</th>
-              <th className="px-6 py-4">Workng Hours</th>
+              <th className="px-6 py-4">Working Hours</th>
               <th className="px-6 py-4">Day Type</th>
               <th className="px-6 py-4">Status</th>
             </tr>
@@ -45,7 +45,7 @@ const AttendanceHistory = ({ history }) => {
                         ? format(new Date(record.date), "hh:mm a")
                         : "-"}
                     </td>
-                    <td className="px-6 py-4 font-medium text-slate-600 font-medium">
+                    <td className="px-6 py-4 font-medium text-slate-600">
                       {getWorkingHoursDisplay(record)}
                     </td>
                       <td className="px-6 py-4 ">
@@ -57,8 +57,12 @@ const AttendanceHistory = ({ history }) => {
                         "-"
                       )}
                     </td>
-                       <td className="px-6 py-4 ">
-                        {record.status}
+                    <td className="px-6 py-4">
+                        <span
+                          className={`badge ${record.status === "PRESENT" ? "badge-success" : record.status === "LATE" ? "badge-warning" : "badge-danger"}`}
+                        >
+                          {record.status}
+                        </span>
                     </td>
                   </tr>
                 );
