@@ -1,4 +1,3 @@
-import React from "react";
 import { getDayTypeDisplay, getWorkingHoursDisplay } from "../../assets/assets";
 import { format } from "date-fns";
 
@@ -48,6 +47,15 @@ const AttendanceHistory = ({ history }) => {
                     </td>
                     <td className="px-6 py-4 font-medium text-slate-600 font-medium">
                       {getWorkingHoursDisplay(record)}
+                    </td>
+                      <td className="px-6 py-4 ">
+                      {dayType.label !== "-" ? (
+                        <span className={`badge ${dayType.className}`}>
+                          {dayType.label}
+                        </span>
+                      ) : (
+                        "-"
+                      )}
                     </td>
                   </tr>
                 );
