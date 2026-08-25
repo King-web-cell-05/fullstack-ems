@@ -1,5 +1,5 @@
 import React from "react";
-import { getDayTypeDisplay } from "../../assets/assets";
+import { getDayTypeDisplay, getWorkingHoursDisplay } from "../../assets/assets";
 import { format } from "date-fns";
 
 const AttendanceHistory = ({ history }) => {
@@ -36,11 +36,18 @@ const AttendanceHistory = ({ history }) => {
                       {format(new Date(record.date), "MMM dd, yyyy")}
                     </td>
 
-                     <td className="px-6 py-4 font-medium text-slate-600">
-                      {record.checkIn ?  format(new Date(record.date), "hh:mm a"): "-"}
+                    <td className="px-6 py-4  text-slate-600">
+                      {record.checkIn
+                        ? format(new Date(record.date), "hh:mm a")
+                        : "-"}
                     </td>
-                    <td className="px-6 py-4 font-medium text-slate-600">
-                      {record.checkOut ?  format(new Date(record.date), "hh:mm a"): "-"}
+                    <td className="px-6 py-4 text-slate-600">
+                      {record.checkOut
+                        ? format(new Date(record.date), "hh:mm a")
+                        : "-"}
+                    </td>
+                    <td className="px-6 py-4 font-medium text-slate-600 font-medium">
+                      {getWorkingHoursDisplay(record)}
                     </td>
                   </tr>
                 );
