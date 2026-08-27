@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { dummyLeaveData } from "../assets/assets";
 import Loading from "../components/Loading";
+import {
+  Palmtree as PalmtreeIcon,
+  Thermometer as ThermometerIcon,
+  Umbrella as UmbrellaIcon,
+} from "lucide-react";
 
 const Leave = () => {
   const [leaves, setLeaves] = useState([]);
@@ -33,7 +38,11 @@ const Leave = () => {
     (leave) => leave.type === "ANNUAL",
   ).length;
 
-  const leaveStats = [];
+  const leaveStats = [
+    { label: "Sick Leave", value: sickCount, icon: ThermometerIcon },
+    { label: "Casual Leave", value: casualCount, icon: UmbrellaIcon },
+    { label: "Annual Leave", value: annualCount, icon: PalmtreeIcon },
+  ];
 
   return <div>Leave</div>;
 };
