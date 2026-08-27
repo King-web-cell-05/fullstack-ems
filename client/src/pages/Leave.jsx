@@ -3,6 +3,7 @@ import { dummyLeaveData } from "../assets/assets";
 import Loading from "../components/Loading";
 import {
   Palmtree as PalmtreeIcon,
+  PlusIcon,
   Thermometer as ThermometerIcon,
   Umbrella as UmbrellaIcon,
 } from "lucide-react";
@@ -44,7 +45,28 @@ const Leave = () => {
     { label: "Annual Leave", value: annualCount, icon: PalmtreeIcon },
   ];
 
-  return <div>Leave</div>;
+  return (
+    <div className="animate-fade-in">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <div>
+          <h1>Leave Management</h1>
+          <p>
+            {isAdmin
+              ? "Manage Leave applications"
+              : "Your leave history and requests"}
+          </p>
+        </div>
+        {!isAdmin && !isDeleted && (
+          <button
+            onClick={() => setShowModal(true)}
+            className="btn-primary flex items-center gap-2 w-full sm:w-auto justify-center"
+          >
+            <PlusIcon className="w-4 h-4" /> Apply for Leave
+          </button>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Leave;
