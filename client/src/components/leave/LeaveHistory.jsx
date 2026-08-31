@@ -47,21 +47,23 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
                       </span>
                     </td>
                     <td className="text-xs  text-slate-500">
-                      {record.checkOut
-                        ? format(new Date(record.date), "hh:mm a")
-                        : "-"}
+                      {format(new Date(leave.startDate), "MMM dd") -
+                        format(new Date(leave.endDate), "MMM dd, yyyy")}
                     </td>
-                    <td className="px-6 py-4 font-medium text-slate-600">
-                      {getWorkingHoursDisplay(record)}
+                    <td
+                      className="max-w-xs truncate text-slate-500 "
+                      title={leave.reason}
+                    >
+                      {leave.reason}
                     </td>
                     <td className="px-6 py-4 ">
-                      {dayType.label !== "-" ? (
-                        <span className={`badge ${dayType.className}`}>
-                          {dayType.label}
-                        </span>
-                      ) : (
-                        "-"
-                      )}
+                      <span
+                        className={
+                          'badge ${leave.status === "APPROVED" ? "badge-success" : }'
+                        }
+                      >
+                        {leave.reason}
+                      </span>
                     </td>
                     <td className="px-6 py-4">
                       <span
