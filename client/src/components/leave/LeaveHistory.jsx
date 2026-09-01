@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import { Check, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { format } from "date-fns";
 
 const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
   const [processing, setProcessing] = useState(null);
 
-  const handleStatusUpdate = async (params) => {
+  const handleStatusUpdate = async (id, status) => {
     setProcessing(id);
+    try {
+      await onUpdate(id, status);
+    } finally {
+      setProcessing(null);
+    }
   };
   return (
     <div className="card overflow-hidden">
@@ -56,22 +63,56 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
                     >
                       {leave.reason}
                     </td>
-                    <td className="px-6 py-4 ">
+                    <td>
                       <span
                         className={
-                          'badge ${leave.status === "APPROVED" ? "badge-success" : }'
+                          'badge ${leave.status === "APPROVED" ? "badge-success" : leave.status === "REJECTED" ? "badge-danger" : "bagde-warning"}'
                         }
                       >
-                        {leave.reason}
+                        {leave.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`badge ${record.status === "PRESENT" ? "badge-success" : record.status === "LATE" ? "badge-warning" : "badge-danger"}`}
-                      >
-                        {record.status}
-                      </span>
-                    </td>
+                    {isAdmin && (
+                      <td>
+                        {leave.status === "PENDING" && (
+                          <div className="flex justify-center gap-2">
+                            <button
+                              disabled={!!processing}
+                              onClick={() =>
+                                handleStatusUpdate(
+                                  leave._id || leave.id,
+                                  "APPROVED",
+                                )
+                              }
+                              className="p-1.5 rounded-md bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors"
+                            >
+                              {processing === (leave._id || leave.id) ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                              ) : (
+                                <Check className="w-4 h-4" />
+                              )}
+                            </button>
+
+                            <button
+                              onClick={() =>
+                                handleStatusUpdate(
+                                  leave._id || leave.id,
+                                  "REJECTED",
+                                )
+                              }
+                              disabled={!!processing}
+                              className="p-1.5 rounded-md bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors"
+                            >
+                              {processing === (leave._id || leave.id) ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                              ) : (
+                                <Check className="w-4 h-4" />
+                              )}
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 );
               })
