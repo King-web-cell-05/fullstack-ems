@@ -13,7 +13,7 @@ const Leave = () => {
   const [leaves, setLeaves] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [isDeleted, setIsLoading] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
   const isAdmin = false;
 
   const fetchLeaves = useCallback(() => {

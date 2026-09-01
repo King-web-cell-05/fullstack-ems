@@ -1,18 +1,20 @@
-import { Check, Loader2 } from "lucide-react";
+import { Check, X, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { format } from "date-fns";
 
-const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
+const LeaveHistory = ({ leaves = [], isAdmin, onUpdate }) => {
   const [processing, setProcessing] = useState(null);
 
   const handleStatusUpdate = async (id, status) => {
     setProcessing(id);
+
     try {
       await onUpdate(id, status);
     } finally {
       setProcessing(null);
     }
   };
+
   return (
     <div className="card overflow-hidden">
       <div className="overflow-x-auto">
@@ -27,24 +29,27 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
               {isAdmin && <th className="text-center">Actions</th>}
             </tr>
           </thead>
+
           <tbody>
             {leaves.length === 0 ? (
               <tr>
                 <td
-                  colSpan={isAdmin ? 6 : 4}
+                  colSpan={isAdmin ? 6 : 5}
                   className="text-center py-12 text-slate-400"
                 >
                   No leave applications found
                 </td>
               </tr>
             ) : (
-              leave.map((leave) => {
+              leaves.map((leave) => {
+                const leaveId = leave._id || leave.id;
+
                 return (
-                  <tr key={leave._id || leave.id}>
+                  <tr key={leaveId}>
                     {isAdmin && (
                       <td className="text-slate-900">
-                        {leave.employee?.firstName}
-                        {leave.employee?.lastName}
+                        {leave.employee?.firstName || "-"}{" "}
+                        {leave.employee?.lastName || ""}
                       </td>
                     )}
 
@@ -53,40 +58,46 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
                         {leave.type}
                       </span>
                     </td>
-                    <td className="text-xs  text-slate-500">
-                      {format(new Date(leave.startDate), "MMM dd") -
-                        format(new Date(leave.endDate), "MMM dd, yyyy")}
+
+                    <td className="text-xs text-slate-500">
+                      {format(new Date(leave.startDate), "MMM dd")} -{" "}
+                      {format(new Date(leave.endDate), "MMM dd, yyyy")}
                     </td>
+
                     <td
-                      className="max-w-xs truncate text-slate-500 "
+                      className="max-w-xs truncate text-slate-500"
                       title={leave.reason}
                     >
                       {leave.reason}
                     </td>
+
                     <td>
                       <span
-                        className={
-                          'badge ${leave.status === "APPROVED" ? "badge-success" : leave.status === "REJECTED" ? "badge-danger" : "bagde-warning"}'
-                        }
+                        className={`badge ${
+                          leave.status === "APPROVED"
+                            ? "badge-success"
+                            : leave.status === "REJECTED"
+                            ? "badge-danger"
+                            : "badge-warning"
+                        }`}
                       >
                         {leave.status}
                       </span>
                     </td>
+
                     {isAdmin && (
                       <td>
                         {leave.status === "PENDING" && (
                           <div className="flex justify-center gap-2">
                             <button
+                              type="button"
                               disabled={!!processing}
                               onClick={() =>
-                                handleStatusUpdate(
-                                  leave._id || leave.id,
-                                  "APPROVED",
-                                )
+                                handleStatusUpdate(leaveId, "APPROVED")
                               }
                               className="p-1.5 rounded-md bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors"
                             >
-                              {processing === (leave._id || leave.id) ? (
+                              {processing === leaveId ? (
                                 <Loader2 className="w-4 h-4 animate-spin" />
                               ) : (
                                 <Check className="w-4 h-4" />
@@ -94,19 +105,17 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
                             </button>
 
                             <button
+                              type="button"
                               onClick={() =>
-                                handleStatusUpdate(
-                                  leave._id || leave.id,
-                                  "REJECTED",
-                                )
+                                handleStatusUpdate(leaveId, "REJECTED")
                               }
                               disabled={!!processing}
                               className="p-1.5 rounded-md bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors"
                             >
-                              {processing === (leave._id || leave.id) ? (
+                              {processing === leaveId ? (
                                 <Loader2 className="w-4 h-4 animate-spin" />
                               ) : (
-                                <Check className="w-4 h-4" />
+                                <X className="w-4 h-4" />
                               )}
                             </button>
                           </div>
