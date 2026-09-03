@@ -1,4 +1,4 @@
-import { CalendarDays, FileText, X } from "lucide-react";
+import { CalendarDays, FileText, Loader2, Send, X } from "lucide-react";
 import React, { useState } from "react";
 
 const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
@@ -126,26 +126,27 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
               value={form.reason}
               onChange={(e) => setForm({ ...form, reason: e.target.value })}
               className="mt-2 min-h-24 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
-              placeholder="Add a reason for your leave"
+              placeholder="Describe the reason for your leave"
               required
             />
           </div>
 
           {/* buttons */}
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex gap-3 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg px-4 py-2 text-sm text-slate-600 hover:bg-slate-100"
+              className="btn-secondary flex-1"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+              className="btn-primary flex-1 flex items-center justify-center gap-2 "
             >
-              {loading ? "Submitting..." : "Submit request"}
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" /> }
+              {loading ? "Submitting..." : "Submit "}
             </button>
           </div>
         </form>
