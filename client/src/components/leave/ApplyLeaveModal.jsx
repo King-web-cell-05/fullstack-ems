@@ -11,13 +11,11 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
   });
 
   const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
   const minDate = today.toISOString().split("T")[0];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.endDate < form.startDate) return;
+    if (!form.startDate || !form.endDate || form.endDate < form.startDate) return;
 
     setLoading(true);
     try {
@@ -77,7 +75,7 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
             </select>
           </div>
           {/* duration */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
             <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-2">
               <CalendarDays className="h-4 w-4 text-slate-400" />
               Duration
@@ -85,11 +83,31 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <span className="block text-xs text-slate-400 mb-1">From</span>
-                <input type="date" name="startDate" required min={minDate} />
+                <input
+                  type="date"
+                  name="startDate"
+                  value={form.startDate}
+                  onChange={(e) =>
+                    setForm({ ...form, startDate: e.target.value })
+                  }
+                  required
+                  min={minDate}
+                  className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+                />
               </div>
-                <div>
+              <div>
                 <span className="block text-xs text-slate-400 mb-1">To</span>
-                <input type="date" name="endDate" required min={minDate} />
+                <input
+                  type="date"
+                  name="endDate"
+                  value={form.endDate}
+                  onChange={(e) =>
+                    setForm({ ...form, endDate: e.target.value })
+                  }
+                  required
+                  min={form.startDate || minDate}
+                  className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+                />
               </div>
             </div>
           </div>
