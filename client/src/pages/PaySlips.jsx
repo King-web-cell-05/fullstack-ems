@@ -1,43 +1,47 @@
-import {useCallback, useEffect, useState} from "react";
-import {dummyEmployeeData, dummyPayslipData} from "../assets/assets";
+import { useCallback, useEffect, useState } from "react";
+import { dummyEmployeeData, dummyPayslipData } from "../assets/assets";
 import Loading from "../components/Loading";
 import PayslipList from "../components/payslips/PayslipList";
-
-
 
 const PrintPayslip = () => {
   const [payslips, setPayslips] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
-  const isAdmin = true;
+  const isAdmin = false;
 
   const fetchPayslips = useCallback(() => {
     setPayslips(dummyPayslipData);
     setTimeout(() => {
       setLoading(false);
-    },1000);
-  },[]);
+    }, 1000);
+  }, []);
 
   useEffect(() => {
-    fetchPayslips()
-  },[fetchPayslips]);
-   
-    useEffect(() => {
-    if(isAdmin) setEmployees(dummyEmployeeData);
-  },[isAdmin]);
+    fetchPayslips();
+  }, [fetchPayslips]);
 
-  if(loading) return <Loading/>;
+  useEffect(() => {
+    if (isAdmin) setEmployees(dummyEmployeeData);
+  }, [isAdmin]);
 
-  return <div className="animate-fade-in">
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-      <div>
-        <h1 className="page-title">Payslips</h1>
-        <p className="page-subtitle">{isAdmin ? "Generate and manage employee payslips" : "Your payslips history"}</p>
+  if (loading) return <Loading />;
+
+  return (
+    <div className="animate-fade-in">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <div>
+          <h1 className="page-title">Payslips</h1>
+          <p className="page-subtitle">
+            {isAdmin
+              ? "Generate and manage employee payslips"
+              : "Your payslips history"}
+          </p>
+        </div>
+        {isAdmin && <p>GENERATE FORM</p>}
       </div>
-      {isAdmin && <p>GENERATE FORM</p>}
+      <PayslipList payslips={payslips} isAdmin={isAdmin} />
     </div>
-    <PayslipList payslips={payslips}  isAdmin={isAdmin}/>
-  </div>;
+  );
 };
 
 export default PrintPayslip;
