@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import React, { useState } from "react";
 import { X } from "lucide-react";
 
@@ -121,6 +121,23 @@ const GeneratePayslipForm = ({ employees, onSucess }) => {
           </div>
 
           {/* buttons */}
+          <div className="flex justify-end gap-3 pt-2">
+            <button
+              onClick={() => setIsOpen(false)}
+              type="button"
+              className="btn-secondary"
+            >
+              Cancel
+            </button>
+            <button
+              disabled={loading}
+              type="submit"
+              className="btn-primary flex items-center"
+            >
+              {loading && <Loader2 className=" w-4 h-4 mr-2animate-spin" />}
+              Generate 
+            </button>
+          </div>
         </form>
       </div>
     </div>
