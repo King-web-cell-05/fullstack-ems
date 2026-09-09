@@ -40,6 +40,7 @@ const PrintPayslip = () => {
   return (
     <div className="min-h-screen bg-slate-100 py-8">
       <div className="max-w-2xl mx-auto bg-white p-8 animate-fade-in">
+
         {/* Header */}
         <div className="text-center border-b border-slate-200 pb-6 mb-8">
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
@@ -59,7 +60,9 @@ const PrintPayslip = () => {
         </div>
 
         {/* Employee Information */}
-        <div className="grid grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+
+          {/* Employee */}
           <div>
             <p className="text-xs text-slate-400 uppercase tracking-wide">
               Employee
@@ -72,6 +75,29 @@ const PrintPayslip = () => {
             </p>
           </div>
 
+          {/* Email */}
+          <div>
+            <p className="text-xs text-slate-400 uppercase tracking-wide">
+              Email
+            </p>
+
+            <p className="font-medium text-slate-900 mt-1 break-words">
+              {payslip.employee?.email || "N/A"}
+            </p>
+          </div>
+
+          {/* Position */}
+          <div>
+            <p className="text-xs text-slate-400 uppercase tracking-wide">
+              Position
+            </p>
+
+            <p className="font-medium text-slate-900 mt-1">
+              {payslip.employee?.position || "N/A"}
+            </p>
+          </div>
+
+          {/* Pay Period */}
           <div>
             <p className="text-xs text-slate-400 uppercase tracking-wide">
               Pay Period
@@ -92,62 +118,65 @@ const PrintPayslip = () => {
 
         {/* Salary Details */}
         <div className="border border-slate-200 rounded-xl overflow-hidden">
+
+          {/* Basic Salary */}
           <div className="flex justify-between items-center px-5 py-4 border-b border-slate-100">
             <span className="text-slate-500">
               Basic Salary
             </span>
 
             <span className="font-medium text-slate-900">
-              ${Number(
+              $
+              {Number(
                 payslip.basicSalary ?? 0
               ).toLocaleString()}
             </span>
           </div>
 
+          {/* Allowances */}
           <div className="flex justify-between items-center px-5 py-4 border-b border-slate-100">
             <span className="text-slate-500">
               Allowances
             </span>
 
             <span className="font-medium text-slate-900">
-              ${Number(
+              $
+              {Number(
                 payslip.allowances ?? 0
               ).toLocaleString()}
             </span>
           </div>
 
+          {/* Deductions */}
           <div className="flex justify-between items-center px-5 py-4 border-b border-slate-100">
             <span className="text-slate-500">
               Deductions
             </span>
 
             <span className="font-medium text-rose-600">
-              -${Number(
+              -$
+              {Number(
                 payslip.deductions ?? 0
               ).toLocaleString()}
             </span>
           </div>
 
+          {/* Net Salary */}
           <div className="flex justify-between items-center px-5 py-5 bg-slate-50">
             <span className="font-semibold text-slate-900">
               Net Salary
             </span>
 
             <span className="text-xl font-bold text-slate-900">
-              ${Number(
+              $
+              {Number(
                 payslip.netSalary ?? 0
               ).toLocaleString()}
             </span>
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-8 pt-6 border-t border-slate-200 text-center">
-          <p className="text-xs text-slate-400">
-            This is a computer-generated payslip.
-          </p>
-        </div>
-
+       
         {/* Print Button */}
         <div className="mt-6 flex justify-center print:hidden">
           <button
@@ -158,6 +187,7 @@ const PrintPayslip = () => {
             Print Payslip
           </button>
         </div>
+
       </div>
     </div>
   );
