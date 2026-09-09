@@ -1,5 +1,5 @@
 import { Toaster } from "react-hot-toast";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import LoginLanding from "./pages/LoginLanding";
 import Layout from "./pages/Layout";
 import Dashboard from "./pages/Dashboard";
@@ -9,14 +9,16 @@ import Leave from "./pages/Leave";
 import PaySlips from "./pages/PaySlips";
 import Settings from "./pages/Settings";
 import PrintPaySlips from "./pages/PrintPayslip";
-import { Navigate } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
+
 const App = () => {
   return (
     <>
       <Toaster />
+
       <Routes>
         <Route path="/login" element={<LoginLanding />} />
+
         <Route
           path="/login/admin"
           element={
@@ -27,6 +29,7 @@ const App = () => {
             />
           }
         />
+
         <Route
           path="/login/employee"
           element={
@@ -46,8 +49,18 @@ const App = () => {
           <Route path="/payslips" element={<PaySlips />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
-        <Route path="/print/payslips" element={<PrintPaySlips />} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+
+        {/* Print individual payslip */}
+        <Route
+          path="/print/payslips/:id"
+          element={<PrintPaySlips />}
+        />
+
+        {/* Redirect unknown routes */}
+        <Route
+          path="*"
+          element={<Navigate to="/dashboard" replace />}
+        />
       </Routes>
     </>
   );
