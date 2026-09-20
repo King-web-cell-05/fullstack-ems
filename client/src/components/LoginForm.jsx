@@ -11,6 +11,7 @@ import {
   LockKeyhole,
   ShieldCheck,
   ArrowRight,
+  UserRound,
 } from "lucide-react";
 
 const LoginForm = ({ role, title, subtitle }) => {
@@ -114,7 +115,7 @@ const LoginForm = ({ role, title, subtitle }) => {
                 <div className="flex items-center justify-between mb-6">
 
                   <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
-                    <ShieldCheck
+                    <UserRound
                       size={21}
                       className="text-blue-600"
                     />
